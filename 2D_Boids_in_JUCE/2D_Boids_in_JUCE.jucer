@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="l5znws" name="2D_Boids_in_JUCE" projectType="guiapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="yQv6GV" name="2D_Boids_in_JUCE">
+    <GROUP id="{1EA5FB56-EE5A-4A8D-04C3-DDB875E1CCC4}" name="Source">
+      <FILE id="UZyqrU" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="Okc2o8" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="zYOdmJ" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="2D_Boids_in_JUCE"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="2D_Boids_in_JUCE"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../SDA/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../SDA/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../SDA/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../SDA/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../SDA/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+</JUCERPROJECT>

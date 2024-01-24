@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+2D_Boids_in_JUCE/JuceLibraryCode/
+2D_Boids_in_JUCE/Builds/
