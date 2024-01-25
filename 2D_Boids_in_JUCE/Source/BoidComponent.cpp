@@ -19,6 +19,11 @@ BoidComponent::BoidComponent()
         boidSpeed[i] = 1;
         boidMoveDirection[i] = rand() % 16;
     }
+    for (int i = 0; i < NumOfPredators; ++i)
+    {
+        predatorX[i] = 50;
+        predatorY[i] = 350;
+    }
     startTimer(50);
 }
 
@@ -42,6 +47,12 @@ void BoidComponent::paint(juce::Graphics& g)
     }
     g.setColour(Colours::indianred);
     g.fillRect(boidX[NumOfBoids - 1] - 1, boidY[NumOfBoids - 1] - 1, BoidWidth, BoidHeight);
+
+    for (int index = 0; index < NumOfPredators; ++index)
+    {
+        g.setColour(Colours::orangered);
+        g.fillRect(predatorX[index], predatorY[index], PredatorWidth, PredatorHeight);
+    }
 }
 
 
@@ -72,6 +83,10 @@ void BoidComponent::timerCallback()
 
     //rule for stopping boids from flying into each other
     personalSpace();
+
+    fleeFromPredator();
+
+    predatorMovement();
 
     repaint();
 }
@@ -531,6 +546,48 @@ int BoidComponent::getNextYCoord(int boidY, float direction, float speed)
     if (direction >= 14.5 && direction < 15.5) //15
     {
         return boidY - 3 * speed;
+    }
+}
+
+void BoidComponent::predatorMovement()
+{
+    
+    if(movePredatorRight == true)
+    for (int i = 0; i < NumOfPredators; ++i)
+    {
+        predatorX[i] += 1;
+        if (predatorX[i] > 695)
+            movePredatorRight = false;
+    }
+    if (movePredatorRight == false)
+        for (int i = 0; i < NumOfPredators; ++i)
+        {
+            predatorX[i] -= 1;
+            if (predatorX[i] < 5)
+                movePredatorRight = true;
+        }
+}
+
+void BoidComponent::fleeFromPredator()
+{
+    int distanceY = 0;
+    int distanceX = 0;
+
+    for (int i = 0; i < NumOfBoids; ++i)
+    {
+        distanceY = boidY[i] - predatorY[0];
+        if (distanceY < spacing * 9 && distanceY >= 0)
+            boidY[i] += 6;
+        if (distanceY > -spacing * 9 && distanceY <= 0)
+            boidY[i] -= 6;
+        distanceY = 0;
+
+        distanceX = boidY[i] - predatorX[0];
+        if (distanceX < spacing * 9 && distanceX >= 0)
+            boidX[i] += 6;
+        if (distanceX > -spacing * 9 && distanceX <= 0)
+            boidX[i] -= 6;
+        distanceX = 0;
     }
 }
 

@@ -14,6 +14,10 @@
 #define NumOfBoids 500
 #define BoidWidth 3
 #define BoidHeight 3
+#define PredatorWidth 5
+#define PredatorHeight 5
+
+#define NumOfPredators 1
 
 class BoidComponent : public juce::Component, public Timer
 {
@@ -52,6 +56,9 @@ public:
     int getNextXCoord(int boidX,float direction, float speed);
     int getNextYCoord(int boidY, float direction, float speed);
 
+    void predatorMovement();
+    void fleeFromPredator();
+
 private:
     const int move = 1;
     const int move2 = 2;
@@ -62,6 +69,11 @@ private:
     int boidY[NumOfBoids];
     int boidSpeed[NumOfBoids];
     float boidMoveDirection[NumOfBoids];
+
+    int predatorX[NumOfPredators];
+    int predatorY[NumOfPredators];
+
+    bool movePredatorRight = true;
 
     double bruh = 0.f;
 
