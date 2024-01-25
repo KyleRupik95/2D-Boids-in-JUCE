@@ -14,10 +14,10 @@ BoidComponent::BoidComponent()
 {
     for (int i = 0; i < NumOfBoids; ++i)
     {
-        boidX[i] = rand() % 695 + 5;
-        boidY[i] = rand() % 695 + 5;
+        boidX[i] = rand() % 650 + 15;
+        boidY[i] = rand() % 650 + 15;
         boidSpeed[i] = 1;
-        boidMoveAngle[i] = rand() % 16;
+        boidMoveDirection[i] = rand() % 16;
     }
     startTimer(50);
 }
@@ -61,16 +61,17 @@ void BoidComponent::timerCallback()
 
     //testMovement();
 
-    AverageDirectionOfNeighbours();
-    convertSpeedAndAngleToMovement();
+    //averageDirectionOfNeighbours();
+   // turnToRelativeCentre();
+   // convertSpeedAndAngleToMovement();
     //boundary rule stops boids flying off the screen
     boundaryRule(leftBoundary, rightBoundary, topBoundary, bottomBoundary);
 
     //rule for moving all boids towards the average center point of all boids x and y coordinates
-   // moveToFlock();
+    moveToFlock();
 
     //rule for stopping boids from flying into each other
-  //  personalSpace();
+    personalSpace();
 
     repaint();
 }
@@ -89,14 +90,14 @@ void BoidComponent::boundaryRule(int leftBoundary, int rightBoundary, int topBou
 {
     for (int index = 0; index < NumOfBoids; ++index)
     {
-        if (boidX[index] == rightBoundary)
-            boidX[index] = boidX[index] - 5;
-        if (boidX[index] == leftBoundary)
-            boidX[index] = boidX[index] + 5;
-        if (boidY[index] == bottomBoundary)
-            boidY[index] = boidY[index] - 5;
-        if (boidY[index] == topBoundary)
-            boidY[index] = boidY[index] + 5;
+        if (boidX[index] > rightBoundary)
+            boidX[index] = boidX[index] - 6;
+        if (boidX[index] < leftBoundary)
+            boidX[index] = boidX[index] + 6;
+        if (boidY[index] > bottomBoundary)
+            boidY[index] = boidY[index] - 6;
+        if (boidY[index] < topBoundary)
+            boidY[index] = boidY[index] + 6;
     }
 }
 
@@ -177,82 +178,82 @@ void BoidComponent::convertSpeedAndAngleToMovement()
 {
     for (int index = 0; index < NumOfBoids; ++index)
     {
-        if (boidMoveAngle[index] >= 0.0  && boidMoveAngle[index] < 0.5)  // 0
+        if (boidMoveDirection[index] >= 0.0  && boidMoveDirection[index] < 0.5)  // 0
         {
             boidY[index] -= 3 * boidSpeed[index];
             // boidX[index] -= 0;
         }
-        if (boidMoveAngle[index] >= 0.5 && boidMoveAngle[index] < 1.5) // 1
+        if (boidMoveDirection[index] >= 0.5 && boidMoveDirection[index] < 1.5) // 1
         {
             boidY[index] -= 3 * boidSpeed[index];
             boidX[index] += 1 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 1.5 && boidMoveAngle[index] < 2.5) // 2
+        if (boidMoveDirection[index] >= 1.5 && boidMoveDirection[index] < 2.5) // 2
         {
             boidY[index] -= 2 * boidSpeed[index];
             boidX[index] += 2 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 2.5 && boidMoveAngle[index] < 3.5) // 3
+        if (boidMoveDirection[index] >= 2.5 && boidMoveDirection[index] < 3.5) // 3
         {
             boidY[index] -= 1 * boidSpeed[index];
             boidX[index] += 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 3.5 && boidMoveAngle[index] < 4.5) // 4
+        if (boidMoveDirection[index] >= 3.5 && boidMoveDirection[index] < 4.5) // 4
         {
             //boidY[index] += 0 * boidSpeed[index];
             boidX[index] += 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 4.5 && boidMoveAngle[index] < 5.5) // 5
+        if (boidMoveDirection[index] >= 4.5 && boidMoveDirection[index] < 5.5) // 5
         {
             boidY[index] += 1 * boidSpeed[index];
             boidX[index] += 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 5.5 && boidMoveAngle[index] < 6.5) // 6
+        if (boidMoveDirection[index] >= 5.5 && boidMoveDirection[index] < 6.5) // 6
         {
             boidY[index] += 2 * boidSpeed[index];
             boidX[index] += 2 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 6.5 && boidMoveAngle[index] < 7.5) // 7
+        if (boidMoveDirection[index] >= 6.5 && boidMoveDirection[index] < 7.5) // 7
         {
             boidY[index] += 3 * boidSpeed[index];
             boidX[index] += 1 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 7.5 && boidMoveAngle[index] < 8.5) // 8
+        if (boidMoveDirection[index] >= 7.5 && boidMoveDirection[index] < 8.5) // 8
         {
             boidY[index] += 3 * boidSpeed[index];
             // boidX[index] -= 0;
         }
-        if (boidMoveAngle[index] >= 8.5 && boidMoveAngle[index] < 9.5) //9
+        if (boidMoveDirection[index] >= 8.5 && boidMoveDirection[index] < 9.5) //9
         {
             boidY[index] += 3 * boidSpeed[index];
             boidX[index] -= 1 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 9.5 && boidMoveAngle[index] < 10.5) //10
+        if (boidMoveDirection[index] >= 9.5 && boidMoveDirection[index] < 10.5) //10
         {
             boidY[index] += 2 * boidSpeed[index];
             boidX[index] -= 2 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 10.5 && boidMoveAngle[index] < 11.5) //11
+        if (boidMoveDirection[index] >= 10.5 && boidMoveDirection[index] < 11.5) //11
         {
             boidY[index] += 1 * boidSpeed[index];
             boidX[index] -= 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 11.5 && boidMoveAngle[index] < 12.5) //12
+        if (boidMoveDirection[index] >= 11.5 && boidMoveDirection[index] < 12.5) //12
         {
             //boidY[index] -= 0 * boidSpeed[index];
             boidX[index] -= 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 12.5 && boidMoveAngle[index] < 13.5) //13
+        if (boidMoveDirection[index] >= 12.5 && boidMoveDirection[index] < 13.5) //13
         {
             boidY[index] -= 1 * boidSpeed[index];
             boidX[index] -= 3 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 13.5 && boidMoveAngle[index] < 14.5) //14
+        if (boidMoveDirection[index] >= 13.5 && boidMoveDirection[index] < 14.5) //14
         {
             boidY[index] -= 2 * boidSpeed[index];
             boidX[index] -= 2 * boidSpeed[index];
         }
-        if (boidMoveAngle[index] >= 14.5 && boidMoveAngle[index] < 15.5) //15
+        if (boidMoveDirection[index] >= 14.5 && boidMoveDirection[index] < 15.5) //15
         {
             boidY[index] -= 3 * boidSpeed[index];
             boidX[index] -= 1 * boidSpeed[index];
@@ -260,13 +261,10 @@ void BoidComponent::convertSpeedAndAngleToMovement()
     }
 }
 
-void BoidComponent::AverageDirectionOfNeighbours()
+void BoidComponent::averageDirectionOfNeighbours()
 {
-    //int distanceX[NumOfBoids];
-    //int distanceY[NumOfBoids];
-    std::vector<float> neighbouringBoid;
     float totalAngleOfNeighbours = 0;
-    float AverageAngleOfNeighbours = 0;
+    float averageAngleOfNeighbours = 0;
     bool pushBack = false;
     float numOfNeighbours = 0;
     int distanceX = 0;
@@ -279,7 +277,7 @@ void BoidComponent::AverageDirectionOfNeighbours()
             if (index1 != index2)
             {
                 distanceX = boidX[index1] - boidX[index2];
-                distanceY = boidX[index1] - boidX[index2];
+                distanceY = boidY[index1] - boidY[index2];
             }
             if (distanceX <= neighbourSearchDistance && distanceX > 0) //scan right
                 pushBack = true;
@@ -291,19 +289,250 @@ void BoidComponent::AverageDirectionOfNeighbours()
                 pushBack = true;
             if (pushBack == true)
             {
-                totalAngleOfNeighbours += boidMoveAngle[index2];
+                totalAngleOfNeighbours += boidMoveDirection[index2];
                 numOfNeighbours += 1;
                 pushBack = false;
             }
         }
-        AverageAngleOfNeighbours = totalAngleOfNeighbours / numOfNeighbours;
-        boidMoveAngle[index1] = AverageAngleOfNeighbours;
+        averageAngleOfNeighbours = totalAngleOfNeighbours / numOfNeighbours;
+        boidMoveDirection[index1] = averageAngleOfNeighbours;
         totalAngleOfNeighbours = 0;
         numOfNeighbours = 0;
         pushBack = false;
     }
 }
 
+void BoidComponent::turnToRelativeCentre()
+{
+
+    int averageX = 0;
+    int averageY = 0;
+    int totalX = 0;
+    int totalY = 0;
+    bool pushBackX = false;
+    bool pushBackY = false;
+    float numOfNeighbours = 0;
+    int distanceX = 0;
+    int distanceY = 0;
+    double currentNextX = 0.0;
+    double currentNextY = 0.0;
+    double currentAngleBoid = 0.0;
+    double differenceX = 0.0;
+    double differenceY = 0.0;
+    double relativeAngleMid = 0.0;
+    double currentDifX = 0.0;
+    double currentDifY = 0.0;
+
+    for (int index1 = 0; index1 < NumOfBoids; ++index1)
+    {
+        for (int index2 = 0; index2 < NumOfBoids; ++index2)
+        {
+            if (index1 != index2)
+            {
+                distanceX = boidX[index1] - boidX[index2];
+                distanceY = boidY[index1] - boidY[index2];
+            }
+            if (distanceX <= neighbourSearchDistance && distanceX > 0) //scan right
+                pushBackX = true;
+            if (distanceX >= -neighbourSearchDistance && distanceX < 0) //scan left
+                pushBackX = true;
+            if (distanceY <= neighbourSearchDistance && distanceY > 0) //scan down
+                pushBackY = true;
+            if (distanceY >= -neighbourSearchDistance && distanceY < 0) // scan up
+                pushBackY = true;
+            if (pushBackX == true)
+            {
+                totalX += boidX[index2];
+                totalY += boidY[index2];
+                numOfNeighbours += 1;
+                pushBackX = false;
+            }
+            if (pushBackY == true)
+            {
+                totalX += boidX[index2];
+                totalY += boidY[index2];
+                numOfNeighbours += 1;
+                pushBackY = false;
+            }
+        }
+        averageX = totalX / numOfNeighbours;
+        averageY = totalY / numOfNeighbours;
+        pushBackX = false;
+        pushBackY = false;
+
+        differenceX = averageX - boidX[index1];
+        differenceY = averageY - boidY[index1];
+        relativeAngleMid = atan(differenceX / differenceY);
+        relativeAngleMid = relativeAngleMid * 180.0 / pi;
+
+        currentNextX = getNextXCoord(boidX[index1], boidMoveDirection[index1], boidSpeed[index1]);
+        currentNextY = getNextYCoord(boidY[index1], boidMoveDirection[index1], boidSpeed[index1]);
+        currentDifX = currentNextX - boidX[index1];
+        currentDifY = currentDifY - boidY[index1];
+        currentAngleBoid = atan(currentDifX / currentDifY);
+        currentAngleBoid = currentAngleBoid * 180.0 / pi;
+
+        if (relativeAngleMid > currentAngleBoid)
+            boidMoveDirection[index1] += 1.0;
+        if (relativeAngleMid < currentAngleBoid)
+            boidMoveDirection[index1] -= 1.0;
+
+        numOfNeighbours = 0.0;
+        totalX = 0.0;
+        totalY = 0.0;
+        differenceX = 0.0;
+        differenceY = 0.0;
+        relativeAngleMid = 0.0;
+        currentNextX = 0.0;
+        currentNextY = 0.0;
+        currentDifX = 0.0;
+        currentDifY = 0.0;
+        currentAngleBoid = 0.0;
+
+    }
+}
+
+
+void BoidComponent::turnAwayFromBoundary()
+{
+
+}
+
+int BoidComponent::getNextXCoord(int boidX, float direction, float speed)
+{
+    if (direction >= 0.0 && direction < 0.5)  // 0
+    {
+        return boidX;
+    }
+    if (direction >= 0.5 && direction < 1.5) // 1
+    {
+        return boidX + 1 * speed;
+    }
+    if (direction >= 1.5 && direction < 2.5) // 2
+    {  
+        return boidX + 2 * speed;
+    }
+    if (direction >= 2.5 && direction < 3.5) // 3
+    {
+        return boidX + 3 * speed;
+    }
+    if (direction >= 3.5 && direction < 4.5) // 4
+    {
+        return boidX + 3 * speed;
+    }
+    if (direction >= 4.5 && direction < 5.5) // 5
+    {
+        return boidX + 3 * speed;
+    }
+    if (direction >= 5.5 && direction < 6.5) // 6
+    {
+        return boidX + 2 * speed;
+    }
+    if (direction >= 6.5 && direction < 7.5) // 7
+    {
+        return boidX + 1 * speed;
+    }
+    if (direction >= 7.5 && direction < 8.5) // 8
+    {
+        return boidX;
+    }
+    if (direction >= 8.5 && direction < 9.5) //9
+    {
+        return boidX - 1 * speed;
+    }
+    if (direction >= 9.5 && direction < 10.5) //10
+    {
+        return boidX - 2 * speed;
+    }
+    if (direction >= 10.5 && direction < 11.5) //11
+    {
+        return boidX - 3 * speed;
+    }
+    if (direction >= 11.5 && direction < 12.5) //12
+    {
+        return boidX - 3 * speed;
+    }
+    if (direction >= 12.5 && direction < 13.5) //13
+    {
+        return boidX - 3 * speed;
+    }
+    if (direction >= 13.5 && direction < 14.5) //14
+    {
+        return boidX - 2 * speed;
+    }
+    if (direction >= 14.5 && direction < 15.5) //15
+    {
+        return boidX - 1 * speed;
+    }
+
+}
+int BoidComponent::getNextYCoord(int boidY, float direction, float speed)
+{
+    if (direction >= 0.0 && direction < 0.5)  // 0
+    {
+        return boidY - 3 * speed;
+    }
+    if (direction >= 0.5 && direction < 1.5) // 1
+    {
+        return boidY - 3 * speed;
+    }
+    if (direction >= 1.5 && direction < 2.5) // 2
+    {
+        return boidY - 2 * speed;
+    }
+    if (direction >= 2.5 && direction < 3.5) // 3
+    {
+        return boidY - 1 * speed;
+    }
+    if (direction >= 3.5 && direction < 4.5) // 4
+    {
+        return boidY;
+    }
+    if (direction >= 4.5 && direction < 5.5) // 5
+    {
+        return boidY + 1 * speed;
+    }
+    if (direction >= 5.5 && direction < 6.5) // 6
+    {
+        return boidY + 2 * speed;
+    }
+    if (direction >= 6.5 && direction < 7.5) // 7
+    {
+        return boidY + 3 * speed;
+    }
+    if (direction >= 7.5 && direction < 8.5) // 8
+    {
+        return boidY + 3 * speed;
+    }
+    if (direction >= 8.5 && direction < 9.5) //9
+    {
+        return boidY + 3 * speed;
+    }
+    if (direction >= 9.5 && direction < 10.5) //10
+    {
+        return boidY + 2 * speed;
+    }
+    if (direction >= 10.5 && direction < 11.5) //11
+    {
+        return boidY + 1 * speed;
+    }
+    if (direction >= 11.5 && direction < 12.5) //12
+    {
+        return boidY;
+    }
+    if (direction >= 12.5 && direction < 13.5) //13
+    {
+        return boidY - 1 * speed;
+    }
+    if (direction >= 13.5 && direction < 14.5) //14
+    {
+        return boidY - 2 * speed;
+    }
+    if (direction >= 14.5 && direction < 15.5) //15
+    {
+        return boidY - 3 * speed;
+    }
+}
 
 /*
 movement list
