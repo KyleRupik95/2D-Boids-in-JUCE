@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    BoidComponent.h
+    MovementTest.h
     Created: 21 Jan 2024 3:02:37pm
     Author:  Kyle Rupik
 
@@ -11,18 +11,18 @@
 #pragma once
 #include <JuceHeader.h>
 
-#define NumOfBoids 100
-#define BoidWidth 3
-#define BoidHeight 3
+#define NumOfBoids 500
+#define BoidWidth 1
+#define BoidHeight 1
 
-class BoidComponent : public juce::Component, public Timer
+class MovementTest : public juce::Component, public Timer
 {
 public:
-    /** BoidComponent constructor */
-    BoidComponent();
+    /** MovementTest constructor */
+    MovementTest();
 
-    /** BoidComponent destructor */
-    ~BoidComponent() override;
+    /** MovementTest destructor */
+    ~MovementTest() override;
 
     /**  */
     void paint(juce::Graphics&) override;
@@ -33,11 +33,10 @@ public:
     /**  */
     void timerCallback() override;
 
-    /** function for testing different movements ie + 3 in X direction, + 1 in y direction */
-    void testMovement();
-
     /** Boundary rule stops boids flying off the edge of the screen */
     void boundaryRule(int leftBoundary, int rightBoundary, int topBoundary, int bottomBoundary);
+    
+    void testMovement();
 
     void moveToFlock();
 
@@ -45,17 +44,15 @@ public:
 
     void moveToRelativeCentre();
 
-    void convertSpeedAndAngleToMovement();
-    void AverageDirectionOfNeighbours();
+    void convertAngle();
 
 private:
     const int move = 1;
     const int move2 = 2;
     const int spacing = 3;
-    const int neighbourSearchDistance = 12;
+    //int velocity[NumOfBoids];
     int boidX[NumOfBoids];
     int boidY[NumOfBoids];
-    int boidSpeed[NumOfBoids];
     float boidMoveAngle[NumOfBoids];
 
 };

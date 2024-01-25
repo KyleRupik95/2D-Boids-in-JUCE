@@ -4,6 +4,9 @@
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="yQv6GV" name="2D_Boids_in_JUCE">
     <GROUP id="{1EA5FB56-EE5A-4A8D-04C3-DDB875E1CCC4}" name="Source">
+      <FILE id="I7afhh" name="MovementTest.cpp" compile="1" resource="0"
+            file="Source/MovementTest.cpp"/>
+      <FILE id="VfdH9B" name="MovementTest.h" compile="0" resource="0" file="Source/MovementTest.h"/>
       <FILE id="J86QBn" name="BoidComponent.cpp" compile="1" resource="0"
             file="Source/BoidComponent.cpp"/>
       <FILE id="A1iN6e" name="BoidComponent.h" compile="0" resource="0" file="Source/BoidComponent.h"/>
